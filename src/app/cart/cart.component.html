@@ -1,0 +1,91 @@
+<h3 class="uk-text-center uk-text-uppercase">Your Cart</h3>
+<div *ngIf="cartItems.length === 0">
+    <h4 class="uk-text-center">Your Cart is empty</h4>
+    <p class="uk-text-center">Add <a href="#" routerLink="/list"> New Items </a> from here </p>
+</div>
+
+<form [formGroup]="cartForm">
+    <div uk-grid>
+        <div>
+            <table class="uk-table">
+                <div *ngIf="cartItems.length > 0">
+                    <div formArrayName="items">
+                        <caption
+                            class="uk-margin-xlarge-right uk-text-center@s uk-text-uppercase uk-animation-scale-up uk-margin-medium-top">
+                            You have {{ cartItems.length }} Items in your cart</caption>
+                        <tbody>
+                            <th></th>
+
+                            <tr *ngFor="let item of cartForm.get('items').controls; let i = index;" [formGroupName]="i">
+
+                                <td>
+
+                                    <div class="uk-margin" uk-grid>
+                                        <div class="uk-card-media-bottom uk-cover-container">
+                                            <img [src]="cartItems[i].productImageUrl"
+                                                alt="{{ cartItems[i].productName }}"
+                                                class="uk-margin-xlarge-left uk-margin-medium-top">
+                                        </div>
+                                    </div>
+
+
+                                </td>
+                                <td>
+
+                                    <div class="uk-card-body">
+                                        <h3 class="uk-card-title">{{ cartItems[i].productName }}</h3>
+                                        <p>{{ cartItems[i].productDesc }}</p>
+                                        <p>Price: {{ cartItems[i].productPrice}}</p>
+                                        <div class="uk-width-1-3@s">
+                                            Quantity: <input class="uk-input uk-margin-top" type="number"
+                                                name="quantity" formControlName="qty" />
+
+
+                                        </div>
+
+                                        <div class="uk-margin uk-text-danger" *ngIf="getValidity(i)">Stock Unavailable
+                                        </div>
+
+
+
+                                        <div class="uk-margin">
+                                            <p class="uk-text-success">Available Stock Item:
+                                                {{ cartItems[i].productQty }}</p>
+                                        </div>
+                                        <button class="uk-button uk-margin-small-top uk-alert-danger"
+                                            (click)="delete(cartItems[i].id, i)">Remove Item</button>
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </div>
+                </div>
+            </table>
+        </div>
+
+
+        <div class="grid-margin uk-margin-large-top" uk-grid>
+        
+            <div *ngIf="cartItems.length !== 0">
+                <div class="uk-card-large uk-align-left uk-card-body">
+                    <div class="uk-text-bold uk-text-large uk-text-warning uk-margin-bottom uk-margin-small-left">
+                        SubTotal: {{ getTotal() | currency }}
+                    </div>
+                    <div class="uk-animation-scale-up uk-text-bold uk-margin uk-margin-small-left">
+                        Free Shipping Over $50
+                    </div>
+                    <div>
+                        <button class="uk-button uk-margin-small-top uk-margin-small-left uk-button-primary checkout"
+                            routerLink="/checkout" (click)="checkout()">CheckOut</button>
+                    </div>
+                    <button class="uk-button uk-button-default uk-margin-small-left pay" routerLink="/list">Add More
+                        Items <span uk-icon="icon: plus" class="uk-margin-small-left"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

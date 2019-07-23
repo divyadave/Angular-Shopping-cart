@@ -1,0 +1,18 @@
+<div class="uk-grid-large uk-margin-auto-left uk-margin-medium-top" uk-grid>
+        <div *ngFor="let product of productDetail">
+            <div class="uk-card uk-card-small uk-card-default uk-box-shadow-hover-large">
+                <div class="uk-card-media-top">
+                    <img [src]="product.productImageUrl" alt="{{ product.productName}}">
+                </div>
+                <div class="uk-card-body uk-card-secondary">
+                    <h3 class="uk-card-title">{{ product.productName}}</h3>
+                    <p>{{ product.productDesc}}</p>
+                    <p>{{ product.productPrice | currency }}</p>
+                </div>
+            </div>
+            <div>
+                <button  class="uk-button uk-button-primary uk-margin-top uk-margin-small-left" (click)="addToCart(product)" onclick="UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Added to cart bag' , pos: 'top-center', status: 'success'})">Add To Cart</button>
+            </div>
+        </div>
+        </div>
+ 

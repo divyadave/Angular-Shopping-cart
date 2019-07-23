@@ -1,0 +1,30 @@
+<nav class="uk-navbar-container uk-margin" uk-navbar>
+    <div class="uk-navbar-left">
+
+        <a class="uk-navbar-item uk-logo" href="#">Shopping Site</a>
+
+        <ul class="uk-navbar-nav">
+            <li>
+                <a routerLink="/list" href="#">
+                    <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                    Products List
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-navbar-right">
+        <div class="uk-navbar-item">
+            <div class="uk-margin-xlarge-right">
+                <span uk-icon="cart"></span><a routerLink="/cart" class="uk-margin-left uk-text-middle uk-text-uppercase"  href="#">Cart</a><span class="uk-badge uk-margin-small-left"> {{ productService.navbarCount}}</span>
+                <div uk-dropdown="pos: top-center">
+                    <ul class="uk-nav uk-dropdown-nav">
+                        <li class="uk-active"><a href="#">Your Items</a></li>
+                        <li *ngFor="let navItem of navProduct"><p>{{ navItem.productName }}  <span class="uk-margin-large-left" uk-icon="icon: trash" (click)="delete(navItem.id)"></span></p></li>
+                        <li *ngIf="!navProduct.length">Your Cart is Empty</li>
+                    </ul>
+                    <button class="uk-button uk-button-primary uk-margin-small-top" routerLink="/cart">Go To Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

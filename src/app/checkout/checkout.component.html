@@ -1,0 +1,140 @@
+<div>
+    <div class="uk-width-auto">
+        <span class="uk-badge uk-margin-medium-left uk-margin-medium-top">1</span>
+    </div>
+    <h5 class="uk-margin-medium-left uk-text-uppercase">Customer Information</h5>
+    <div uk-grid>
+        <form [formGroup]='contactForm' class="uk-grid-margin-large">
+            <div id="name" class="uk-grid-small" uk-grid>
+                <div class="uk-width-auto uk-margin-bottom">
+                    <span class="uk-margin-medium-left" uk-icon="user"></span>
+                </div>
+                <div>
+                    <input class="uk-input" type="text" formControlName="firstName" id="firstname"
+                        placeholder="First Name" required />
+                </div>
+                <div class="uk-margin-left">
+                    <input class="uk-input" type="text" formControlName="lastName" id="lastname" placeholder="Last Name"
+                        required />
+                </div>
+                <div class="uk-width-auto">
+                    <span uk-icon="close" (click)="clearNameControl()"></span>
+                </div>
+                <div class="uk-width-1-1 uk-margin-auto-bottom">
+                    <div *ngIf="contactForm.controls['firstName'].invalid && (contactForm.controls['firstName'].dirty || contactForm.controls['firstName'].touched)"
+                        class="uk-text-danger" style="margin-left: 2.5em;">First Name is required</div>
+                </div>
+            </div>
+            <div id="email" class="uk-grid-small" uk-grid>
+                <div class="uk-width-auto">
+                    <span class="uk-margin-medium-left" uk-icon="mail"></span>
+                </div>
+                <div class="uk-width-2-3@l">
+                    <input class="uk-input" type="text" formControlName="email" id="emailid" placeholder="Email" />
+                </div>
+                <div class="uk-width-auto">
+                    <span uk-icon="close" (click)="clearEmailIdControl()"></span>
+                </div>
+                <div class="uk-width-1-1">
+                    <div *ngIf="contactForm.get('email').errors?.email" style="margin-left: 2.2em; color: red;">The
+                        Email is not valid</div>
+                </div>
+            </div>
+            <span class="uk-badge uk-margin-medium-left uk-margin-medium-top">2</span>
+            <h5 class="uk-margin-medium-left uk-text-uppercase">Shipping Address</h5>
+            <div id="Address" class="uk-grid-small" uk-grid>
+                <div class="uk-width-auto">
+                    <span class="uk-margin-medium-left" uk-icon="home"></span>
+                </div>
+                <div class="uk-width-3-4">
+                    <input class="uk-input" type="text" formControlName="address" id="address"
+                        placeholder="Address 1" />
+                </div>
+                <div class="uk-width-auto uk-margin-left">
+                    <span uk-icon="close" (click)="clearAddressControl()"></span>
+                </div>
+                <div class="uk-width-1-1">
+          <div *ngIf="contactForm.get('email').errors?.email" style="margin-left: 2.2em; color: red;">The
+            Email is not valid</div>
+        </div> 
+            </div>
+            <div id="phonenum" class="uk-grid-small" formArrayName="phoneNum" uk-grid>
+                <div class="uk-width-auto">
+                    <span class="uk-margin-medium-left" uk-icon="receiver"></span>
+                </div>
+                <div class="uk-width-1-3">
+                    <ng-container *ngFor="let num of phoneNum.controls; let phoneIndex = index">
+                        <div class="uk-margin uk-grid-collapse" [formGroupName]="phoneIndex" uk-grid>
+                            <div class="uk-grid-collapse" uk-grid>
+                                <div>
+                                    <input class="uk-input" style="margin-bottom: 0px;" type="text"
+                                        formControlName="phone" id="phone" placeholder="Phone" />
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="uk-grid-small" uk-grid>
+
+                <div class="uk-width-auto">
+                    <span class="uk-margin-medium-left" uk-icon="location"></span>
+                </div>
+                <div>
+                    <input class="uk-input" type="text" formControlName="city" id="city" placeholder="City Name"
+                        required />
+                </div>
+                <div>
+                    <input class="uk-input" type="text" formControlName="zipCode" id="zipcode" placeholder="Zipcode"
+                        required />
+                </div>
+                <div class="uk-width-auto uk-margin-left">
+                    <span uk-icon="close" (click)="clearZipControl()"></span>
+                </div>
+
+            </div>
+
+            <div>
+                <div class="uk-margin-medium-top uk-margin-medium-left">
+                    <button class="uk-button uk-button-primary uk-margin-medium-left" id="save"
+                        type="submit" [disabled]="contactForm.pristine">Place Your Order</button>
+                    <button class="uk-button uk-button-default uk-margin-small-left" id="clear"
+                        (click)="reset()">Clear</button>
+                </div>
+            </div>
+
+        </form>
+        <div uk-grid>
+            <div>
+                <h5 class="uk-text-uppercase">Shopping Summary:</h5>
+                <div class="uk-card uk-card-default" *ngFor="let item of checkoutItems">
+                    <div class="uk-card-header">
+                        <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                            <div class="uk-width-auto">
+                                <img class="uk-border-circle" width="40" height="40" [src]="item.productImageUrl">
+                            </div>
+                            <div class="uk-width-expand">
+                                <h3 class="uk-card-title uk-margin-remove-bottom">{{ item.productName }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        <p>Original Price: {{ item.productPrice }}</p>
+                        <p>Total Quantity: {{ item.productQty }}</p>
+                    </div>
+                    <div class="uk-card-footer">
+                        <p>Total: {{ item.productQty * item.productPrice }}</p>
+                    </div>
+                </div>
+                <div *ngIf="checkoutItems.length === 0">
+                        <p class="uk-margin-xlarge-top uk-text-bold">Add Items in your cart</p>
+                    </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
